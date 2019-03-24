@@ -18,7 +18,6 @@ public:
   int start();
 
 protected:
-  void _threadAttrSet(pthread_attr_t *attr, unsigned priority, bool bDetached);
   
   static void *run(void *);
 };

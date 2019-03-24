@@ -1,0 +1,10 @@
+
+cmake-build-debug/
+
+\.idea/
+
+build/
+
+lib/
+
+modules/common/glog/

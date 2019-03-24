@@ -12,11 +12,7 @@ endif()
 
 if(OVF_USING_GLOG)
     # <find glog>
-    set(glog_inc /home/yz/Libs/glog/cmake-build-debug /home/yz/Libs/glog/src)
-    set(glog_libs_dir /home/yz/Libs/glog/cmake-build-debug)
-    find_library(glog_libs glogd ${glog_libs_dir})
-    include_directories(${glog_inc})
-    message("*\n*-- find glog: ${glog_libs}")
+    find_package(GLOG REQUIRED)
     #</find glog>
 endif()
 

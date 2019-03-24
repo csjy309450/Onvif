@@ -6,8 +6,19 @@
 
 set(wsdd_target WSDiscovery)
 set(wsdd_version 1.0.0)
-set(wsdd_link_flag -lWSDiscovery)
+
 set(wsdd_target_name lib${wsdd_target}.so)
+
+#if("${CMAKE_CURRENT_LIST_DIR}" STREQUAL "${PROJECT_SOURCE_DIR}")
+#    set(wsdd_prefix_dir )
+#else()
+#
+#endif()
+
+set(wsdd_export_header
+        ${CMAKE_CURRENT_LIST_DIR}/onvif/discoveryobj.h
+        ${CMAKE_CURRENT_LIST_DIR}/onvif/discoverythread.h)
+
 set(wsdd_header
         ${glog_inc}
         ${common_header}
@@ -34,6 +45,7 @@ message("* TAR: ${wsdd_target_name}\n* DIR: ${CMAKE_CURRENT_LIST_DIR} ")
 message("*****************************************************************\n")
 
 include_directories(
+        ${GLOG_INCLUDE_DIR}
         ${CMAKE_CURRENT_LIST_DIR}/../common
         ${CMAKE_CURRENT_LIST_DIR}
         ${CMAKE_CURRENT_LIST_DIR}/onvif
@@ -47,12 +59,17 @@ endif()
 if(OVF_BUILD_WSDD)
     ## compile libWSDiscovery
     add_library(${wsdd_target} SHARED ${wsdd_header} ${wsdd_src})
+    install(TARGETS ${wsdd_target}
+            DESTINATION ${OVF_LIBS_DIR})
+    install(FILES ${wsdd_export_header}
+            DESTINATION ${OVF_INC_DIR}/WSDiscovery)
+
 endif()
 
 if(OVF_BUILD_TEST)
     ## test code
     add_executable(wsdd_server ${CMAKE_CURRENT_LIST_DIR}/test/wsdd_server.cpp)
-    target_link_libraries(wsdd_server ${glog_libs} ${wsdd_target})
+    target_link_libraries(wsdd_server ${GLOG_LIBRARY} ${wsdd_target} pthread)
 endif()
 
 

@@ -24,7 +24,6 @@ int main() {
   DiscoveryObj *discoveryObj = new DiscoveryObj(SERVER_MODE, 1, _xaddr, _type, _scope, _endpoint);
   
   while (1) {
-    printf("main thread !\n");
     sleep(5);
   }
   
