@@ -4,10 +4,11 @@ libonvif_dir=$(pwd)
 rm -r lib
 mkdir lib
 
+git submodule init
 git submodule update
 
 ## build 3rdparty libs
-glog
+# glog
 cd ./3rdparty/glog
 rm -r build
 mkdir build
