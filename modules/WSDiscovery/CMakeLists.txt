@@ -58,18 +58,25 @@ endif()
 
 if(OVF_BUILD_WSDD)
     ## compile libWSDiscovery
+    set(CMAKE_CXX_FLAGS_TMP "${CMAKE_CXX_FLAGS}")
+    set(CMAKE_CXX_FLAGS "-Wl,-rpath=$ORIGIN ${CMAKE_CXX_FLAGS}")
     add_library(${wsdd_target} SHARED ${wsdd_header} ${wsdd_src})
+    target_link_libraries(${wsdd_target} pthread ${GLOG_LIBRARY})
+#    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS_TMP}")
     install(TARGETS ${wsdd_target}
             DESTINATION ${OVF_LIBS_DIR})
     install(FILES ${wsdd_export_header}
             DESTINATION ${OVF_INC_DIR}/WSDiscovery)
-
 endif()
+
+
 
 if(OVF_BUILD_TEST)
     ## test code
     add_executable(wsdd_server ${CMAKE_CURRENT_LIST_DIR}/test/wsdd_server.cpp)
-    target_link_libraries(wsdd_server ${GLOG_LIBRARY} ${wsdd_target} pthread)
+    target_link_libraries(wsdd_server ${wsdd_target})
+    install(TARGETS wsdd_server
+            DESTINATION ${OVF_LIBS_DIR})
 endif()
 
 
